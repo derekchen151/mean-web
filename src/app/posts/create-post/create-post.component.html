@@ -1,11 +1,12 @@
 <form (ngSubmit)="onSavePost(f)" #f="ngForm">
-  <div>
-    <label for="name">New Post</label>
-    <textarea ngModel name="name" id="name" cols="30" rows="6"></textarea>
-  </div>
-  <div>
-    <button type="submit">Save</button>
-  </div>
+  <mat-card>
+    <mat-form-field>
+      <label for="name">New Post</label>
+      <textarea matInput ngModel name="name" id="name" rows="6"></textarea>
+    </mat-form-field>
+    <button color="accent" mat-raised-button type="submit">Save Post</button>
+  </mat-card>
+
 </form>
 
 <br><br>
