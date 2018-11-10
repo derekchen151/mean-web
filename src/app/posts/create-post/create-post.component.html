@@ -1,0 +1,12 @@
+<form (ngSubmit)="onSavePost(f)" #f="ngForm">
+  <div>
+    <label for="name">New Post</label>
+    <textarea ngModel name="name" id="name" cols="30" rows="6"></textarea>
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+
+<br><br>
+<p>{{post}}</p>
