@@ -1,13 +1,16 @@
 <form (ngSubmit)="onSavePost(f)" #f="ngForm">
   <mat-card>
     <mat-form-field>
-      <label for="name">New Post</label>
-      <textarea matInput ngModel name="name" id="name" rows="6"></textarea>
+      <label for="title">Post Title</label>
+      <input type="text" name="title" id="title" matInput required ngModel #title="ngModel">
+      <mat-error *ngIf="title.invalid && title.touched">You cannot have an empty post title</mat-error>
     </mat-form-field>
-    <button color="accent" mat-raised-button type="submit">Save Post</button>
+    <mat-form-field>
+      <label for="content">Post Content</label>
+      <textarea matInput ngModel name="content" id="content" rows="6" required #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid && content.touched">You cannot have an empty post content</mat-error>
+    </mat-form-field>
+    <button [disabled]="!f.valid" color="accent" mat-raised-button type="submit">Save Post</button>
   </mat-card>
-
 </form>
 
-<br><br>
-<p>{{post}}</p>
