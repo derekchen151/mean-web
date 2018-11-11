@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { PostService } from '../post.service';
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  post: Post;
 
   constructor(private postService: PostService) { }
 
@@ -17,8 +15,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   onSavePost(f: NgForm) {
-    const nPost = new Post(f.value.title, f.value.content);
-    this.postService.addNewPost(nPost);
+    this.postService.addNewPost(f.value.title, f.value.content);
     f.reset();
   }
 

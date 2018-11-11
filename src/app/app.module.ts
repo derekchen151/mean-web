@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -21,6 +22,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
