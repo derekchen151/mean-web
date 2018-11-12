@@ -45,9 +45,23 @@ app.post("/api/posts", function(req, res) {
     title: req.body.title,
     content: req.body.content
   });
-  post.save();
-  res.status(201).json({
-    message: 'new post added'
+  post.save().then(result => {
+    console.log(result);
+    res.status(201).json({
+      message: 'new post added',
+      id: result._id
+    });
+  });
+});
+
+app.delete("/api/posts/:id", function(req, res) {
+  Post.findByIdAndDelete(req.params.id, (err, res) => {
+    if(err) {
+      console.log(err);
+    }
+  })
+  res.status(200).json({
+    message: 'post deleted'
   });
 });
 
