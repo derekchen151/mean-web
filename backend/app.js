@@ -1,6 +1,16 @@
-var express = require("express"),
-    app = express(),
-    bodyParser = require("body-parser");
+const express = require("express"),
+      app = express(),
+      bodyParser = require("body-parser"),
+      mongoose = require("mongoose"),
+      Post = require('./models/post');
+
+mongoose.connect('mongodb+srv://john:F233aTrVwkU4QAT@cluster0-8ztdu.mongodb.net/posts?retryWrites=true', {useNewUrlParser: true})
+  .then(() => {
+    console.log("connected to database");
+  })
+  .catch(() => {
+    console.log("trouble connecting to database");
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -11,28 +21,31 @@ app.use((req, res, next) => {
   next();
 });
 
-const posts = [
-  {id:"dadji2232314", title:"first post from server", content:"This is coming from the server"},
-  {id:"dnwe29184929", title:"second post from server", content:"The second posts"}
-];
+const posts = [];
 
 app.get("/", function(req, res) {
   res.send("Welcome to server!");
 });
 
 app.get("/api/posts", function(req, res) {
-  res.status(200).json({
-    message: 'Posts fetched successfully',
-    posts: posts
-  });
+  Post.find((err, response) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.status(200).json({
+        message: 'Posts fetched successfully',
+        posts: response
+      });
+    }
+  })
 });
 
 app.post("/api/posts", function(req, res) {
-  // this.posts.push({
-  //   id: "dsjsnngijdn223",
-  //   title: req.body.post.title,
-  //   content: req.body.post.content
-  // });
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
+  post.save();
   res.status(201).json({
     message: 'new post added'
   });
