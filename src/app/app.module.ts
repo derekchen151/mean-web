@@ -1,27 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { PostsComponent } from './posts/posts.component';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { PipetestPipe } from './pipetest.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    PostsComponent,
     CreatePostComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent,
+    SignupComponent,
+    PipetestPipe
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
     MatCardModule,
@@ -29,7 +35,9 @@ import { PostListComponent } from './posts/post-list/post-list.component';
     MatToolbarModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    AppRoutingModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

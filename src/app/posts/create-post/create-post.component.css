@@ -1,3 +1,11 @@
 mat-form-field {
   width: 100%;
 }
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+.img-preview img {
+  max-height: 200px;
+}

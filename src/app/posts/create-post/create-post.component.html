@@ -1,18 +1,44 @@
-<form (ngSubmit)="onSavePost(f)" #f="ngForm">
-  <mat-card>
-    <mat-form-field>
-      <input
-        type="text" name="title" id="title" matInput required ngModel #title="ngModel"
-        placeholder="Post Title">
-      <mat-error *ngIf="title.invalid && title.touched">You cannot have an empty post title</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <textarea
-        matInput ngModel name="content" id="content" rows="6" required #content="ngModel"
-        placeholder="Post Content"></textarea>
-      <mat-error *ngIf="content.invalid && content.touched">You cannot have an empty post content</mat-error>
-    </mat-form-field>
-    <button [disabled]="!f.valid" color="accent" mat-raised-button type="submit">Save Post</button>
-  </mat-card>
-</form>
-
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form *ngIf="!isLoading" (submit)="onSavePost()" [formGroup]="postForm">
+      <mat-form-field>
+        <input
+          type="text" name="title" id="title" matInput formControlName="title"
+          placeholder="Post Title">
+        <mat-error *ngIf="postForm.get('title').invalid">You cannot have an empty post title</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button mat-button type="button" (click)="fileSelector.click()">Pick Image</button>
+        <input type="file" #fileSelector (change)="onImagePicked($event)" >
+      </div>
+      <div class="img-preview" *ngIf="imgPreview !== '' && imgPreview">
+        <img [src]="imgPreview" [alt]="postForm.value.title">
+      </div>
+      <mat-form-field>
+        <textarea
+          matInput name="content" id="content" rows="6" formControlName="content"
+          placeholder="Post Content"></textarea>
+        <mat-error *ngIf="postForm.get('title').invalid">You cannot have an empty post content</mat-error>
+      </mat-form-field>
+      <button color="accent" mat-raised-button type="submit">{{someAction}} Post</button>
+  </form>
+  <!-- <form *ngIf="!isLoading" (ngSubmit)="onSavePost(f)" #f="ngForm">
+      <mat-form-field>
+        <input
+          type="text" name="title" id="title" matInput required [ngModel]="post?.title" #title="ngModel"
+          placeholder="Post Title">
+        <mat-error *ngIf="title.invalid && title.touched">You cannot have an empty post title</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button mat-button type="button" (click)="fileSelector.click()">Pick Image</button>
+        <input type="file" #fileSelector >
+      </div>
+      <mat-form-field>
+        <textarea
+          matInput [ngModel]="post?.content" name="content" id="content" rows="6" required #content="ngModel"
+          placeholder="Post Content"></textarea>
+        <mat-error *ngIf="content.invalid && content.touched">You cannot have an empty post content</mat-error>
+      </mat-form-field>
+      <button [disabled]="!f.valid" color="accent" mat-raised-button type="submit">{{someAction}} Post</button>
+  </form> -->
+</mat-card>

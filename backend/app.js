@@ -2,7 +2,7 @@ const express = require("express"),
       app = express(),
       bodyParser = require("body-parser"),
       mongoose = require("mongoose"),
-      Post = require('./models/post');
+      postRouter = require('./routes/posts');
 
 mongoose.connect('mongodb+srv://john:F233aTrVwkU4QAT@cluster0-8ztdu.mongodb.net/posts?retryWrites=true', {useNewUrlParser: true})
   .then(() => {
@@ -12,57 +12,21 @@ mongoose.connect('mongodb+srv://john:F233aTrVwkU4QAT@cluster0-8ztdu.mongodb.net/
     console.log("trouble connecting to database");
   });
 
+mongoose.set('useFindAndModify', false);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE, OPTIONS');
   next();
 });
 
-const posts = [];
+app.use('/api/posts', postRouter);
 
 app.get("/", function(req, res) {
   res.send("Welcome to server!");
-});
-
-app.get("/api/posts", function(req, res) {
-  Post.find((err, response) => {
-    if(err) {
-      console.log(err);
-    } else {
-      res.status(200).json({
-        message: 'Posts fetched successfully',
-        posts: response
-      });
-    }
-  })
-});
-
-app.post("/api/posts", function(req, res) {
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content
-  });
-  post.save().then(result => {
-    console.log(result);
-    res.status(201).json({
-      message: 'new post added',
-      id: result._id
-    });
-  });
-});
-
-app.delete("/api/posts/:id", function(req, res) {
-  Post.findByIdAndDelete(req.params.id, (err, res) => {
-    if(err) {
-      console.log(err);
-    }
-  })
-  res.status(200).json({
-    message: 'post deleted'
-  });
 });
 
 module.exports = app;
